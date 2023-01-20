@@ -5,6 +5,7 @@ import { getCurrentConversation } from "../redux/conversation/conversationSlice"
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { axiosFetch } from "../utils/axios-utils";
 import Conversation from "./Conversation";
+import Loading from "./Loading";
 
 function Chats() {
   const { user } = useAppSelector((state) => state.user);
@@ -14,6 +15,7 @@ function Chats() {
   var SocketRef: any;
   const [inWidth, setInWidth] = useState(window.innerWidth);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     function handleResize() {
@@ -28,6 +30,7 @@ function Chats() {
   const currentChatId = localStorage.getItem("currentChatId");
 
   useEffect(() => {
+    setLoading(true);
     const getConversations = async () => {
       try {
         const { data } = await axiosFetch({
@@ -35,7 +38,9 @@ function Chats() {
           method: "post",
         });
         setConversations(data);
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     };
@@ -54,15 +59,20 @@ function Chats() {
 
   return (
     <div className="scrollMe">
-      <div className="d-flex p-2 justify-content-between">
-        <span className=" mx-2">Friends {conversations.length}</span>
-      </div>
-      {conversations.length > 0 &&
-        conversations.map((convo: any) => (
-          <div key={convo._id} onClick={() => currentChatHandler(convo)}>
-            <Conversation data={convo} />
+      {loading && <Loading />}
+      {!loading && (
+        <>
+          <div className="d-flex p-2 justify-content-between">
+            <span className=" mx-2">Friends {conversations.length}</span>
           </div>
-        ))}
+          {conversations.length > 0 &&
+            conversations.map((convo: any) => (
+              <div key={convo._id} onClick={() => currentChatHandler(convo)}>
+                <Conversation data={convo} />
+              </div>
+            ))}
+        </>
+      )}
     </div>
   );
 }

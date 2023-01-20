@@ -12,7 +12,7 @@ const store = configureStore({
         search: searchReducer,
         allChat: allChatReducer
     },
-    middleware: [logger]
+    middleware: []
 })
 
 export default store;
