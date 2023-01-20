@@ -121,7 +121,6 @@ function Home() {
     SocketRef?.on("getOnlineUsers", (users: any) => {
       let online = users.map((item: any) => item.userId);
       dispatch(getOnlineUsers(online));
-      console.log("online", users);
     });
   });
 
