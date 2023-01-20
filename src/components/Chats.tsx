@@ -55,7 +55,7 @@ function Chats() {
   return (
     <div className="scrollMe">
       <div className="d-flex p-2 justify-content-between">
-        <span className=" mx-2">Friends ${conversations.length}</span>
+        <span className=" mx-2">Friends {conversations.length}</span>
       </div>
       {conversations.length > 0 &&
         conversations.map((convo: any) => (
