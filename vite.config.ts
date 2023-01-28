@@ -23,7 +23,7 @@ export default defineConfig({
         short_name: 'MyChat',
         start_url: '/',
         display: 'standalone',
-        background_color: '#D3D3D3',
+        background_color: '#F8F9FA',
         lang: 'en',
         scope: '/',
         icons: [
